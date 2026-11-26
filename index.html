@@ -87,6 +87,10 @@
       border-top: 4px solid var(--dorado);
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
     }
+    /* Domingo más cercano: borde dorado brillante y leve resplandor */
+    .card.destacado {
+      box-shadow: 0 0 0 2px var(--dorado), 0 6px 22px rgba(232, 163, 61, 0.25);
+    }
     .fecha {
       color: var(--dorado);
       font-family: "Arial", sans-serif;
@@ -95,6 +99,17 @@
       letter-spacing: 1.5px;
       text-transform: uppercase;
       margin: 0 0 14px;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--dorado);
+      color: #1a1a1a;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      margin-left: 8px;
+      vertical-align: middle;
     }
     .card p {
       margin: 8px 0;
@@ -165,16 +180,26 @@
       });
     }
 
-    function crearTarjeta(domingo) {
+    // Fecha de hoy en formato "YYYY-MM-DD", según la hora local del visitante
+    function fechaHoy() {
+      const ahora = new Date();
+      const mes = String(ahora.getMonth() + 1).padStart(2, "0");
+      const dia = String(ahora.getDate()).padStart(2, "0");
+      return `${ahora.getFullYear()}-${mes}-${dia}`;
+    }
+
+    function crearTarjeta(domingo, etiqueta) {
       const card = document.createElement("div");
-      card.className = "card";
+      card.className = etiqueta ? "card destacado" : "card";
+
+      const badge = etiqueta ? `<span class="badge">${etiqueta}</span>` : "";
 
       const repertorio = domingo.repertorio
         .map(c => `<li>${c.titulo} <span class="tono">(${c.autor}${c.tono ? " · " + c.tono : ""})</span></li>`)
         .join("");
 
       card.innerHTML = `
-        <p class="fecha">${formatearFecha(domingo.fecha)}</p>
+        <p class="fecha">${formatearFecha(domingo.fecha)}${badge}</p>
         <p><span class="etiqueta">Director:</span> ${domingo.director}</p>
         <p><span class="etiqueta">Músicos:</span> ${domingo.musicos.join(", ")}</p>
         <p><span class="etiqueta">Voces:</span> ${domingo.voces.join(", ")}</p>
@@ -193,7 +218,18 @@
       .then(datos => {
         document.getElementById("mes").textContent = datos.mes;
         const grid = document.getElementById("grid");
-        datos.domingos.forEach(domingo => grid.appendChild(crearTarjeta(domingo)));
+
+        const hoy = fechaHoy();
+        // Primer domingo que es hoy o después
+        const proximo = datos.domingos.find(d => d.fecha >= hoy);
+
+        datos.domingos.forEach(domingo => {
+          let etiqueta = null;
+          if (domingo === proximo) {
+            etiqueta = domingo.fecha === hoy ? "Hoy" : "Próximo domingo";
+          }
+          grid.appendChild(crearTarjeta(domingo, etiqueta));
+        });
       })
       .catch(err => {
         document.getElementById("error").textContent =
