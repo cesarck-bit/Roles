@@ -207,6 +207,8 @@
   </main>
 
   <script>
+    // Clave de acceso (Se puede poner cualquiera)    
+    const CLAVE = "cosecha2026";
     // Links publicados de Google Sheets (formato CSV)
     const URL_DOMINGOS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVkaOYy27CEINDreY8EPqiA8HFGKRZMHi6PhJkx2SxRAjNgpTNO2eRQ0GSzWqqr1MjbanQGmJTlbea/pub?gid=0&single=true&output=csv";
     const URL_CANCIONES = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVkaOYy27CEINDreY8EPqiA8HFGKRZMHi6PhJkx2SxRAjNgpTNO2eRQ0GSzWqqr1MjbanQGmJTlbea/pub?gid=485661815&single=true&output=csv";
@@ -389,6 +391,15 @@
       document.getElementById("sin-resultados").hidden = encontrados > 0 || termino === "";
     });
 
+    // Pide la clave una vez por pestaña del navegador
+    const acceso = sessionStorage.getItem("acceso") === "ok" || prompt("Clave de acceso:") === CLAVE;
+    if (!acceso) {
+      document.querySelector("main").innerHTML =
+        '<p class="error">Clave incorrecta. Recarga la página para intentar de nuevo.</p>';
+      throw new Error("Acceso no permitido");
+    }
+    sessionStorage.setItem("acceso", "ok");
+    
     // Carga las dos pestañas de Google Sheets y muestra las tarjetas
     Promise.all([
       fetch(URL_DOMINGOS).then(r => {
