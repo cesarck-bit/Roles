@@ -153,6 +153,30 @@
       text-align: center;
       color: #ff8a80;
     }
+
+    /* Buscador */    
+.buscador {    
+  display: block;    
+  width: 100%;    
+  max-width: 420px;    
+  margin: 0 auto 24px;    
+  padding: 12px 16px;    
+  font-size: 1rem;    
+  font-family: "Arial", sans-serif;    
+  background: var(--tarjeta);    
+  color: var(--texto);    
+  border: 1px solid var(--dorado);    
+  border-radius: 8px;    
+}    
+.buscador::placeholder {    
+  color: var(--gris);    
+}    
+.sin-resultados {    
+  text-align: center;    
+  color: var(--gris);    
+  font-style: italic;    
+}
+
   </style>
 </head>
 <body>
@@ -165,6 +189,8 @@
   </header>
 
   <main>
+    <input type="search" id="buscador" class="buscador" placeholder="Buscar por nombre...">
+    <p class="sin-resultados" id="sin-resultados" hidden>No hay domingos con ese nombre.</p>
     <div class="grid" id="grid"></div>
     <p class="error" id="error"></p>
   </main>
@@ -235,6 +261,27 @@
         document.getElementById("error").textContent =
           "No pude cargar los roles. Revisa que roles.json esté en la misma carpeta. (" + err.message + ")";
       });
+      // Quita acentos y pasa a minúsculas para que "cesar" encuentre "César"    
+function normalizar(texto) {    
+  return texto    
+    .normalize("NFD")    
+    .replace(/[\u0300-\u036f]/g, "")    
+    .toLowerCase();    
+}    
+
+document.getElementById("buscador").addEventListener("input", function () {    
+  const termino = normalizar(this.value.trim());    
+  const tarjetas = document.querySelectorAll("#grid .card");    
+  let encontrados = 0;    
+
+  tarjetas.forEach(card => {    
+    const coincide = normalizar(card.textContent).includes(termino);    
+    card.style.display = coincide ? "" : "none";    
+    if (coincide) encontrados++;    
+  });    
+
+  document.getElementById("sin-resultados").hidden = encontrados > 0 || termino === "";    
+});
   </script>
 
 </body>
