@@ -6,22 +6,41 @@
   <title>Roles de músicos · La Cosecha</title>
   <style>
     :root {
-      --azul: #1d4e89;
-      --azul-oscuro: #13355d;
+      --fondo: #0d1a2b;
+      --tarjeta: #15273d;
       --dorado: #e8a33d;
-      --crema: #faf7f1;
-      --texto: #2b2b2b;
-      --gris: #6b6b6b;
+      --dorado-suave: #f3c77a;
+      --texto: #eee8dc;
+      --gris: #a9b4c2;
     }
 
     * { box-sizing: border-box; }
 
     body {
       font-family: "Georgia", "Times New Roman", serif;
-      background: var(--crema);
+      background: var(--fondo);
       color: var(--texto);
       margin: 0;
       padding: 0 16px 40px;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Imagen de fondo en transparencia: el logo, fijo y centrado */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("logo.jpg") no-repeat center 40% / min(70vw, 520px);
+      filter: brightness(0) invert(1);
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header, main {
+      position: relative;
+      z-index: 1;
     }
 
     header {
@@ -34,7 +53,7 @@
       height: auto;
     }
     h1 {
-      color: var(--azul-oscuro);
+      color: var(--dorado-suave);
       font-size: 2rem;
       font-weight: normal;
       letter-spacing: 1px;
@@ -62,14 +81,14 @@
       margin: 0 auto;
     }
     .card {
-      background: #fff;
+      background: rgba(21, 39, 61, 0.92);
       border-radius: 10px;
       padding: 22px 20px;
       border-top: 4px solid var(--dorado);
-      box-shadow: 0 3px 10px rgba(19, 53, 93, 0.08);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
     }
     .fecha {
-      color: var(--azul);
+      color: var(--dorado);
       font-family: "Arial", sans-serif;
       font-size: 0.85rem;
       font-weight: bold;
@@ -83,7 +102,7 @@
       font-size: 0.95rem;
     }
     .etiqueta {
-      color: var(--azul-oscuro);
+      color: var(--dorado-suave);
       font-weight: bold;
     }
     .card ol {
@@ -103,20 +122,21 @@
     .btn {
       display: inline-block;
       padding: 9px 16px;
-      background: var(--azul);
-      color: #fff;
+      background: var(--dorado);
+      color: #1a1a1a;
       text-decoration: none;
       border-radius: 6px;
       font-family: "Arial", sans-serif;
       font-size: 0.9rem;
+      font-weight: bold;
       transition: background 0.2s;
     }
     .btn:hover {
-      background: var(--azul-oscuro);
+      background: var(--dorado-suave);
     }
     .error {
       text-align: center;
-      color: #a32020;
+      color: #ff8a80;
     }
   </style>
 </head>
