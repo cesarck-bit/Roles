@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roles de músicos · La Cosecha</title>
+  <style>
+    :root {
+      --azul: #1d4e89;
+      --azul-oscuro: #13355d;
+      --dorado: #e8a33d;
+      --crema: #faf7f1;
+      --texto: #2b2b2b;
+      --gris: #6b6b6b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Georgia", "Times New Roman", serif;
+      background: var(--crema);
+      color: var(--texto);
+      margin: 0;
+      padding: 0 16px 40px;
+    }
+
+    header {
+      text-align: center;
+      padding: 28px 0 8px;
+    }
+    header img {
+      width: 180px;
+      max-width: 60%;
+      height: auto;
+    }
+    h1 {
+      color: var(--azul-oscuro);
+      font-size: 2rem;
+      font-weight: normal;
+      letter-spacing: 1px;
+      margin: 18px 0 4px;
+    }
+    .divisor {
+      width: 80px;
+      height: 3px;
+      background: var(--dorado);
+      margin: 10px auto 12px;
+      border-radius: 2px;
+    }
+    .mes {
+      text-align: center;
+      color: var(--gris);
+      font-style: italic;
+      margin: 0 0 28px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 22px 20px;
+      border-top: 4px solid var(--dorado);
+      box-shadow: 0 3px 10px rgba(19, 53, 93, 0.08);
+    }
+    .fecha {
+      color: var(--azul);
+      font-family: "Arial", sans-serif;
+      font-size: 0.85rem;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+    }
+    .card p {
+      margin: 8px 0;
+      line-height: 1.45;
+      font-size: 0.95rem;
+    }
+    .etiqueta {
+      color: var(--azul-oscuro);
+      font-weight: bold;
+    }
+    .card ol {
+      padding-left: 20px;
+      margin: 6px 0 14px;
+      font-size: 0.95rem;
+    }
+    .card li {
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+    .tono {
+      color: var(--gris);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+    .btn {
+      display: inline-block;
+      padding: 9px 16px;
+      background: var(--azul);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-family: "Arial", sans-serif;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: var(--azul-oscuro);
+    }
+    .error {
+      text-align: center;
+      color: #a32020;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.jpg" alt="La Cosecha Comunidad Cristiana">
+    <h1>Roles de músicos</h1>
+    <div class="divisor"></div>
+    <p class="mes" id="mes"></p>
+  </header>
+
+  <main>
+    <div class="grid" id="grid"></div>
+    <p class="error" id="error"></p>
+  </main>
+
+  <script>
+    // Convierte "2026-11-01" en "domingo 1 de noviembre" sin desfase de zona horaria
+    function formatearFecha(fechaISO) {
+      const fecha = new Date(fechaISO + "T00:00:00");
+      return fecha.toLocaleDateString("es-CR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long"
+      });
+    }
+
+    function crearTarjeta(domingo) {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const repertorio = domingo.repertorio
+        .map(c => `<li>${c.titulo} <span class="tono">(${c.autor}${c.tono ? " · " + c.tono : ""})</span></li>`)
+        .join("");
+
+      card.innerHTML = `
+        <p class="fecha">${formatearFecha(domingo.fecha)}</p>
+        <p><span class="etiqueta">Director:</span> ${domingo.director}</p>
+        <p><span class="etiqueta">Músicos:</span> ${domingo.musicos.join(", ")}</p>
+        <p><span class="etiqueta">Voces:</span> ${domingo.voces.join(", ")}</p>
+        <p class="etiqueta">Repertorio:</p>
+        <ol>${repertorio}</ol>
+        <a class="btn" href="${domingo.playlist}" target="_blank" rel="noopener">Ver playlist</a>
+      `;
+      return card;
+    }
+
+    fetch("roles.json")
+      .then(respuesta => {
+        if (!respuesta.ok) throw new Error("No se pudo cargar roles.json");
+        return respuesta.json();
+      })
+      .then(datos => {
+        document.getElementById("mes").textContent = datos.mes;
+        const grid = document.getElementById("grid");
+        datos.domingos.forEach(domingo => grid.appendChild(crearTarjeta(domingo)));
+      })
+      .catch(err => {
+        document.getElementById("error").textContent =
+          "No pude cargar los roles. Revisa que roles.json esté en la misma carpeta. (" + err.message + ")";
+      });
+  </script>
+
+</body>
+</html>

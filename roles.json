@@ -1,0 +1,72 @@
+{
+  "mes": "Noviembre 2026",
+  "domingos": [
+    {
+      "fecha": "2026-11-01",
+      "director": "Rebeca Machado",
+      "musicos": ["Luis Méndez", "Daniel Alvarado", "Cesar Cespedes", "Jorge Chávez"],
+      "voces": ["Patricia Castro", "Stuart Blanco"],
+      "repertorio": [
+        { "orden": 1, "titulo": "Eres Dios", "autor": "Miel San Marcos", "tono": "G" },
+        { "orden": 2, "titulo": "Gracia Sublime es", "autor": "Filipe Mora", "tono": "C" },
+        { "orden": 3, "titulo": "El cielo y la tierra", "autor": "Julio Melgar", "tono": "Original" }
+      ],
+      "playlist": "https://youtube.com/playlist?list=PLOwBlaogMzh8&si=o9xde-cgMOOJ8kqK"
+    },
+    {
+      "fecha": "2026-11-08",
+      "director": "César Cespedes",
+      "musicos": ["Luis Méndez", "Freddy Cascante", "Jorge Chávez", "Abigail Moraga"],
+      "voces": ["Patricia Ávila", "Stuart Blanco"],
+      "repertorio": [
+        { "orden": 1, "titulo": "Anciano de días", "autor": "Roy Kenoli", "tono": "Original" },
+        { "orden": 2, "titulo": "Popurrí Canto, Danzo, Salto - Yo venceré", "autor": "Miel San Marcos", "tono": "Original" },
+        { "orden": 3, "titulo": "Poderoso Dios", "autor": "Marcos Witt", "tono": "Original" },
+        { "orden": 4, "titulo": "Hay poder en la sangre", "autor": "Julio Melgar", "tono": "Original" }
+      ],
+      "playlist": "https://youtube.com/playlist?list=PLMPghG2GrfvE&si=UesuprlLTua-0jHr"
+    },
+    {
+      "fecha": "2026-11-15",
+      "director": "Nataly Godínez",
+      "musicos": ["Luis Méndez", "Daniel Alvarado", "Jorge Chávez", "Judith Escalante"],
+      "voces": ["Genesis Castro", "Sheirys Ugalde"],
+      "repertorio": [
+        { "orden": 1, "titulo": "Levántate y Sálvame", "autor": "Marcos Witt", "tono": "" },
+        { "orden": 2, "titulo": "Grande y fuerte", "autor": "Miel San Marcos", "tono": "D" },
+        { "orden": 3, "titulo": "Hossana", "autor": "Marco Barrientos", "tono": "Original" },
+        { "orden": 4, "titulo": "Padre nuestro", "autor": "Bethel", "tono": "Original" },
+        { "orden": 5, "titulo": "Cuán grande es Dios", "autor": "En espíritu y en verdad", "tono": "G#" }
+      ],
+      "playlist": "https://youtube.com/playlist?list=PLQPUZDaoAOJo&si=7wLEpwUtcq8Ohhvj"
+    },
+    {
+      "fecha": "2026-11-22",
+      "director": "Genesis Cubero",
+      "musicos": ["Freddy Cascante", "Esteban Godínez", "Cesar Cespedes", "Judith Escalante"],
+      "voces": ["Abigail Moraga", "Sheirys Ugalde"],
+      "repertorio": [
+        { "orden": 1, "titulo": "Te doy gloria", "autor": "En espíritu y en verdad", "tono": "G" },
+        { "orden": 2, "titulo": "De Gloria en Gloria", "autor": "Marco Barrientos", "tono": "C" },
+        { "orden": 3, "titulo": "En tu luz", "autor": "En espíritu y en verdad", "tono": "F#" },
+        { "orden": 4, "titulo": "Quien como él", "autor": "Natali Billini", "tono": "F#" },
+        { "orden": 5, "titulo": "Como dijiste", "autor": "Christine D'Clario", "tono": "E" }
+      ],
+      "playlist": "https://youtube.com/playlist?list=PLJksJvUCTp5g&si=Wgz__qxPUrXKFIvO"
+    },
+    {
+      "fecha": "2026-11-29",
+      "director": "Yanci Barrantes",
+      "musicos": ["Jorge Chávez", "Cesar Cespedes", "Judith Escalante", "Daniel Alvarado"],
+      "voces": ["Patricia Ávila", "Patricia Castro"],
+      "repertorio": [
+        { "orden": 1, "titulo": "Que se llene tu casa", "autor": "Ingrid Rosario", "tono": "Original" },
+        { "orden": 2, "titulo": "El Dios que adoramos", "autor": "Sovereign Grace", "tono": "Original" },
+        { "orden": 3, "titulo": "Levántate", "autor": "Christine D'Clario", "tono": "Original" },
+        { "orden": 4, "titulo": "Eres digno de adorar", "autor": "Mission Música", "tono": "Original" },
+        { "orden": 5, "titulo": "Más grande", "autor": "Gateway Worship", "tono": "Original" }
+      ],
+      "playlist": "https://youtube.com/playlist?list=PLHoPjUU1AId0&si=xv87PD11gXZ0lUgF"
+    }
+  ]
+}
