@@ -31,7 +31,7 @@
       content: "";
       position: fixed;
       inset: 0;
-      background: url("logo.png") no-repeat center 40% / min(70vw, 520px);
+      background: url("logo.jpg") no-repeat center 40% / min(70vw, 520px);
       filter: brightness(0) invert(1);
       opacity: 0.06;
       pointer-events: none;
@@ -176,13 +176,23 @@
   color: var(--gris);    
   font-style: italic;    
 }
-
+/* Botón de WhatsApp */    
+.btn-whatsapp {    
+  margin-left: 6px;    
+  border: none;    
+  cursor: pointer;    
+  background: #25d366;    
+  color: #fff;    
+}    
+.btn-whatsapp:hover {    
+  background: #1ebe5b;    
+}
   </style>
 </head>
 <body>
 
   <header>
-    <img src="logo.png" alt="La Cosecha Comunidad Cristiana">
+    <img src="logo.jpg" alt="La Cosecha Comunidad Cristiana">
     <h1>Roles de músicos</h1>
     <div class="divisor"></div>
     <p class="mes" id="mes"></p>
@@ -214,7 +224,7 @@
       return `${ahora.getFullYear()}-${mes}-${dia}`;
     }
 
-    function crearTarjeta(domingo, etiqueta) {
+function crearTarjeta(domingo, etiqueta) {
       const card = document.createElement("div");
       card.className = etiqueta ? "card destacado" : "card";
 
@@ -232,7 +242,13 @@
         <p class="etiqueta">Repertorio:</p>
         <ol>${repertorio}</ol>
         <a class="btn" href="${domingo.playlist}" target="_blank" rel="noopener">Ver playlist</a>
+        <button class="btn btn-whatsapp">Copiar para WhatsApp</button>
       `;
+
+      card.querySelector(".btn-whatsapp").addEventListener("click", function () {
+        copiarResumen(domingo, this);
+      });
+
       return card;
     }
 
@@ -282,7 +298,37 @@ document.getElementById("buscador").addEventListener("input", function () {
 
   document.getElementById("sin-resultados").hidden = encontrados > 0 || termino === "";    
 });
+// Arma el texto con formato de WhatsApp (*negrita* y saltos de línea)
+    function construirResumen(domingo) {
+      const lineas = [
+        `*Roles de músicos · ${formatearFecha(domingo.fecha)}*`,
+        "",
+        `🎤 *Director:* ${domingo.director}`,
+        `🎸 *Músicos:* ${domingo.musicos.join(", ")}`,
+        `🎶 *Voces:* ${domingo.voces.join(", ")}`,
+        "",
+        "📖 *Repertorio:*",
+        ...domingo.repertorio.map(c =>
+          `${c.orden}. ${c.titulo} (${c.autor}${c.tono ? " · " + c.tono : ""})`
+        )
+      ];
+      return lineas.join("\n");
+    }
+
+    // Copia el resumen al portapapeles y avisa en el botón
+    async function copiarResumen(domingo, boton) {
+      try {
+        await navigator.clipboard.writeText(construirResumen(domingo));
+        boton.textContent = "¡Copiado!";
+      } catch (err) {
+        boton.textContent = "No se pudo copiar";
+      }
+      setTimeout(() => {
+        boton.textContent = "Copiar para WhatsApp";
+      }, 2000);
+    }
   </script>
 
 </body>
 </html>
+  
